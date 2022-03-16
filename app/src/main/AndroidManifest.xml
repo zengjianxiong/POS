@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.task">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zdcx.pos">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".App"
+        android:name="com.zdcx.pos.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/ActionBarAppTheme">
         <activity
-            android:name=".ui.component.login.LoginActivity"
+            android:name="com.zdcx.pos.ui.component.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".ui.component.splash.SplashActivity"
-            android:theme="@style/AppTheme">
+            android:name="com.zdcx.pos.ui.component.splash.SplashActivity"
+            android:theme="@style/AppTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,19 +27,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.component.recipes.RecipesListActivity"
+            android:name="com.zdcx.pos.ui.component.recipes.RecipesListActivity"
             android:label="@string/title_activity_recipes">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".ui.component.details.DetailsActivity"
+            android:name="com.zdcx.pos.ui.component.details.DetailsActivity"
             android:label="@string/title_activity_recipe_details" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- If you are using androidx.startup to initialize other components -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
     </application>
 
 </manifest>

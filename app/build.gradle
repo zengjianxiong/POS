@@ -1,27 +1,25 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'kotlin-platform-android'
-    id 'dagger.hilt.android.plugin'
 }
-
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
-        applicationId 'com.eltaher.task'
+        applicationId 'com.zdcx.pos'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "com.task.CustomTestRunner"
+        testInstrumentationRunner "com.zdcx.pos.CustomTestRunner"
     }
-    buildFeatures {
-        viewBinding = true
+
+    viewBinding {
+        enabled = true
     }
     buildTypes {
         debug {
@@ -44,11 +42,11 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
     }
     configurations.all {
         resolutionStrategy {
@@ -108,12 +106,21 @@ dependencies {
         exclude group: "com.android.support"
     }
     implementation "androidx.activity:activity-ktx:$activityKtxVersion"
-    // Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodels"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //koin
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
+    //WorkManager
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    //room
+    implementation "androidx.room:room-common:$room"
+    kapt "androidx.room:room-compiler:$room"
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
 }
 kapt {
     correctErrorTypes true
